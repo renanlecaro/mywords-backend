@@ -15,12 +15,16 @@ app.use(cors())
 app.use(limiter)
 
 app.get('/', function (req, res, next) {
+  res.set('Cache-Control', 'public, max-age=0');
   res.end('OK')
 })
 
 app.get('/translate/:lang_in/:lang_out/:text', function (req, res, next) {
   translateString(req.params)
-    .then(t=>res.json(t), next)
+    .then(t=>{
+      res.set('Cache-Control', 'public, max-age=31557600');
+      res.json(t)
+    }, next)
 })
 
 const port = process.env.PORT || 3001
