@@ -11,6 +11,11 @@ const limiter = rateLimit({
 });
 
 app.use(limiter)
+
+app.get('/', function (req, res, next) {
+  res.end('OK')
+})
+
 app.get('/translate/:lang_in/:lang_out/:text', function (req, res, next) {
   translateString(req.params)
     .then(t=>res.json(t), next)
