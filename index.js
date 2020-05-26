@@ -3,6 +3,7 @@ require('dotenv').config()
 var rp = require('request-promise');
 var express = require('express')
 const rateLimit = require("express-rate-limit");
+var cors = require('cors')
 var app = express()
 
 const limiter = rateLimit({
@@ -10,6 +11,7 @@ const limiter = rateLimit({
   max: 1500 // limit each IP to 1500 requests per 24h
 });
 
+app.use(cors())
 app.use(limiter)
 
 app.get('/', function (req, res, next) {
